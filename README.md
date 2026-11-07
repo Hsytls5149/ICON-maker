@@ -2,7 +2,7 @@
 
 **WinIconStudio** is a high-performance, offline Windows desktop utility and CLI that converts arbitrary image files (`.png`, `.jpg`, `.jpeg`, `.webp`, `.bmp`) into sharp, professional-grade, multi-resolution `.ico` containers with on-device AI background removal and dynamic edge sharpening.
 
-![Windows Icon Studio](docs/preview_banner.png)
+
 
 ---
 
