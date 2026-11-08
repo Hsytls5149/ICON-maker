@@ -31,10 +31,13 @@
 ### 1. Launch Graphical User Interface (GUI)
 
 ```powershell
-# Using the pre-compiled standalone executable:
+# Option A: Single-file portable executable (no companion folder, drop anywhere):
+.\dist\portable\WinIconStudio.exe
+
+# Option B: Folder-based standalone build:
 .\dist\release\WinIconStudio\WinIconStudio.exe
 
-# Or running directly via Python:
+# Option C: Running directly via Python:
 .\.venv\Scripts\python.exe main.py
 ```
 
@@ -122,13 +125,19 @@ All unit, integration, error-handling, and offscreen GUI tests run in ~1.5s.
 
 ## Building Standalone Executable & Installer
 
-### 1. Compile Standalone Folder Bundle (PyInstaller)
+### 1. Compile Single-File Portable Executable (OneFile)
+```powershell
+.\.venv\Scripts\python.exe build.py --onefile
+```
+Generates a single self-contained executable at `dist\portable\WinIconStudio.exe`.
+
+### 2. Compile Standalone Folder Bundle (OneDir)
 ```powershell
 .\.venv\Scripts\python.exe build.py
 ```
-Output will be generated in `dist\WinIconStudio\`.
+Output is generated in `dist\release\WinIconStudio\`.
 
-### 2. Generate Windows Setup Installer (Inno Setup)
+### 3. Generate Windows Setup Installer (Inno Setup)
 Open `installer\WinIconStudio.iss` in Inno Setup Compiler or run via command line:
 ```powershell
 ISCC.exe installer\WinIconStudio.iss

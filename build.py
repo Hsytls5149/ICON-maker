@@ -22,13 +22,15 @@ def build(onefile: bool = False):
     if not pyinstaller_exe.exists():
         pyinstaller_exe = Path(shutil.which("pyinstaller") or "pyinstaller")
 
+    dist_path = ROOT_DIR / "dist" / ("portable" if onefile else "release")
+
     # Command arguments
     cmd = [
         str(pyinstaller_exe),
         "--noconfirm",
         "--windowed",
         "--name", "WinIconStudio",
-        "--distpath", str(ROOT_DIR / "dist" / "release"),
+        "--distpath", str(dist_path),
         "--add-data", f"{model_src};models",
         "--collect-all", "onnxruntime",
     ]
@@ -43,13 +45,15 @@ def build(onefile: bool = False):
     print(f"Running: {' '.join(cmd)}")
     subprocess.check_call(cmd, cwd=str(ROOT_DIR))
 
-    # Also ensure models/ is in dist/release/WinIconStudio/
-    dist_dir = ROOT_DIR / "dist" / "release" / "WinIconStudio"
-    if dist_dir.exists() and not (dist_dir / "models").exists():
-        (dist_dir / "models").mkdir(parents=True, exist_ok=True)
-        shutil.copy2(model_src, dist_dir / "models" / "u2netp.onnx")
-
-    print(f"\n[SUCCESS] Build completed! Check '{dist_dir}' folder.")
+    if not onefile:
+        dist_dir = dist_path / "WinIconStudio"
+        if dist_dir.exists() and not (dist_dir / "models").exists():
+            (dist_dir / "models").mkdir(parents=True, exist_ok=True)
+            shutil.copy2(model_src, dist_dir / "models" / "u2netp.onnx")
+        print(f"\n[SUCCESS] Build completed! Check '{dist_dir}' folder.")
+    else:
+        exe_file = dist_path / "WinIconStudio.exe"
+        print(f"\n[SUCCESS] Single-file portable executable completed! Check '{exe_file}'.")
 
 
 if __name__ == "__main__":
